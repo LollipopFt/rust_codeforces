@@ -1,10 +1,20 @@
+#![warn(clippy::pedantic, clippy::cargo, clippy::nursery, clippy::restriction)]
+
 fn main() {
-    let mut matrix: Vec<Vec<u8>> = Vec::new();
-    for _ in 0..5 {
-        let mut line: String = String::new();
-        std::io::stdin().read_line(&mut line).unwrap();
-        let line: Vec<u8> = line.split_whitespace().map(|x| x.parse::<u8>().unwrap()).collect();
-        matrix.push(line);
-    }
-    print!("{:?}", matrix);
+    let mut input: String = String::new();
+    std::io::stdin().read_line(&mut input).unwrap();
+    let input: Vec<char> = input.trim().to_lowercase().chars().collect();
+    let mut output: String = String::new();
+    for i in input.iter() {
+        match i {
+            'a'|'e'|'i'|'o'|'u'|'y' => None,
+            _ => {
+                output+=&".".to_string();
+                output+=&i.to_string();
+                Some(())
+            }
+        };
+    };
+    use std::io::{self, Write};
+    writeln!(io::BufWriter::new(io::stdout().lock()), "{}", output).ok();
 }

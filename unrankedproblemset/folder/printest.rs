@@ -4,6 +4,7 @@ use std::{
 };
 
 fn main() {
+    println!("Multi Test:");
     let mut print = std::time::Duration::new(0, 0);
     for _ in 0..100 {
         let start = Instant::now();
@@ -17,16 +18,20 @@ fn main() {
         println+=start.elapsed()
     }
     let mut write = std::time::Duration::new(0, 0);
+    let mut handle = io::BufWriter::new(io::stdout());
     for _ in 0..100 {
         let start = Instant::now();
-        write!(io::BufWriter::new(io::stdout().lock()), "hello").expect("Error.");
+        write!(handle, "hello").ok();
         write+=start.elapsed()
     }
+    io::stdout().flush().ok();
     let mut writeln = std::time::Duration::new(0, 0);
+    let mut handle = io::BufWriter::new(io::stdout());
     for _ in 0..100 {
         let start = Instant::now();
-        writeln!(io::BufWriter::new(io::stdout().lock()), "hello").expect("Error.");
+        writeln!(handle, "hello").ok();
         writeln+=start.elapsed()
     }
+    io::stdout().flush().ok();
     println!("print!: {:?}\nprintln!: {:?}\nwrite!: {:?}\nwriteln!: {:?}", print, println, write, writeln);
 }
